@@ -21,8 +21,32 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/style1.css',
+        'css/bootstrap-grid.css',
+        'css/bootstrap-grid.css.map',
+        'css/bootstrap-grid.min.css',
+        'css/bootstrap-grid.min.css.map',
+        'css/bootstrap-reboot.css',
+        'css/bootstrap-reboot.css.map',
+        'css/bootstrap-reboot.min.css',
+        'css/bootstrap-reboot.min.css.map',
+        'css/bootstrap.css',
+        'css/bootstrap.css.map',
+        'css/bootstrap.min.css',
+        'css/bootstrap.min.css.map',
+
+        
     ];
     public $js = [
+        'js/bootstrap.bundle.js',
+        'js/bootstrap.bundle.js.map',
+        'js/bootstrap.bundle.min.js',
+        'js/bootstrap.bundle.min.js.map',
+        'js/bootstrap.js',
+        'js/bootstrap.js.map',
+        'js/bootstrap.min.js',
+        'js/bootstrap.min.js.map',
+        
     ];
     public $depends = [
         'yii\web\YiiAsset',
