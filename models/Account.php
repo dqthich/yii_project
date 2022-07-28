@@ -2,11 +2,10 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 use yii\base\Model;
 
-
-class Account extends Model
+class Account extends ActiveRecord 
 {
     public $account_id;
     public $account_name;
@@ -48,5 +47,17 @@ class Account extends Model
             'avatar' => 'Avatar',
             'register' => 'Verify Account',
         ];
+    }
+
+    //Kiem tra dang nhap
+    public function login($username, $password)
+    {
+        $dong = Account::find()->where(['account_name'=>$username, 'password'=>$password])->count();
+            if($dong==1){
+                return true;
+            }else{
+                return false;
+            }
+
     }
 }

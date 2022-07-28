@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Account;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -71,16 +72,21 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        $model = new Account();
+        if ($model->load(Yii::$app->request->post())) {
+
+           $request = Yii::$app->request->post('Account');
+           $username = $request['account_name'];
+           $password = $request['password'];
+
+           if($model->login($username, $password)== true)
+           {
+                echo "Đăng nhập thành công"; exit;
+           }else{
+                echo "Đăng nhập thất bại"; exit;
+            }
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);

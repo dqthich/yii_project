@@ -34,9 +34,11 @@ class AppAsset extends AssetBundle
         'css/bootstrap.css.map',
         'css/bootstrap.min.css',
         'css/bootstrap.min.css.map',
-
+        'css/font-awesome',
+        'css/font-awesome.min',
         
     ];
+   
     public $js = [
         'js/bootstrap.bundle.js',
         'js/bootstrap.bundle.js.map',
