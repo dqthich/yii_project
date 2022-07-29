@@ -1,1 +1,0 @@
-<h1>Đây là trang index trong friend controller</h1>

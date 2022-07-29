@@ -16,11 +16,11 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '3P1FCLkz7a20gMslCjF-mNr1fRSvCQXG',
         ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+        // 'cache' => [
+        //     'class' => 'yii\caching\FileCache',
+        // ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Account',
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [

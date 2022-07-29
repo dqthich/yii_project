@@ -52,6 +52,8 @@ class Account extends ActiveRecord
     //Kiem tra dang nhap
     public function login($username, $password)
     {
+        // $data = Account::find()->asArray()->all();
+        // return $data;
         $dong = Account::find()->where(['account_name'=>$username, 'password'=>$password])->count();
             if($dong==1){
                 return true;
