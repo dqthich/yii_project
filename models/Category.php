@@ -41,4 +41,29 @@ class Category extends Model
             'account_id' => 'Account Id',
         ];
     }
+    public function addCategory()
+    {
+        $account = new Category();
+        $account ->account_name = $this ->account_name;
+        $account ->email = $this ->email;
+        $account ->password = $this ->password;
+
+        return $account->save() ? $account : null;
+        
+    }
+
+    public function listCategory()
+    {
+
+    }
+
+    public function editCategory($id)
+    {
+
+    }
+
+    public function deleteCategory($id)
+    {
+
+    }
 }

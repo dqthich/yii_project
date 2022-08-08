@@ -70,29 +70,6 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        $model = new Account();
-        if ($model->load(Yii::$app->request->post())) {
-
-           $request = Yii::$app->request->post('Account');
-           $username = $request['account_name'];
-           $password = $request['password'];
-
-           if($model->login($username, $password)== true)
-           {
-              //  echo "Đăng nhập thành công"; exit;
-                return $this->redirect(Yii::$app->homeUrl);
-           }else{
-                echo "Đăng nhập thất bại"; exit;
-            }
-        
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-          
-    }
 
     /**
      * Logout action.

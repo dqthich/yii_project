@@ -7,13 +7,13 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
-$this->title = 'Login';
+$this->title = 'Sign up';
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>Please fill out the following fields to login:</p>
-
+    <?= Yii::$app->session->getFlash('success'); ?>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
@@ -26,14 +26,15 @@ $this->title = 'Login';
     ]); ?>
 
         <?= $form->field($model, 'account_name')->textInput(['autofocus' => true]) ?>
-
+        <?= $form->field($model, 'email')->input('email') ?>
         <?= $form->field($model, 'password')->passwordInput() ?>
 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                <a class="dropdown-item" href="#">Forgot password?</a>
+                <?= Html::submitButton('Sign up', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                or
+                <?= Html::a('Sign in',['account/login'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?> 
+               
             </div>
            
         </div>

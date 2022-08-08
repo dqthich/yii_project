@@ -16,10 +16,24 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '3P1FCLkz7a20gMslCjF-mNr1fRSvCQXG',
         ],
-        // 'cache' => [
-        //     'class' => 'yii\caching\FileCache',
-        // ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'timeZone' => 'America/Los_Angeles',
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+               'db'=>[
+                  'class' => 'yii\log\DbTarget',
+                  'logTable'=>'{{test_log}}',
+                  'levels' => ['error', 'warning', 'trace', 'info'],
+                  'categories' => ['yii\db\*'],
+               ],
+            ],
+         ],
+        
         'user' => [
+            
             'identityClass' => 'app\models\Account',
             'enableAutoLogin' => true,
         ],
@@ -27,21 +41,24 @@ $config = [
             'errorAction' => 'site/error',
         ],
         'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
+            //'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            //'useFileTransport' => true,
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'your-host-domain e.g. smtp.gmail.com',
+                'username' => 'your-email-or-username',
+                'password' => 'your-password',
+                'port' => '587',
+                'encryption' => 'tls',
+                        ],
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
+       
         'db' => $db,
         
         'urlManager' => [
