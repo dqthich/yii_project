@@ -1,17 +1,17 @@
 <?php
 
 namespace app\models;
-
+use yii\db\ActiveRecord;
 use Yii;
 use yii\base\Model;
 
 
-class Wallet extends Model
+class Wallet extends ActiveRecord
 {
-    public $wallet_id;
-    public $balance;
-    public $description;
-    public $id_account;
+    private $wallet_id;
+    private $balance;
+    private $description;
+    private $id_account;
     
     /**
      * @return array the validation rules.

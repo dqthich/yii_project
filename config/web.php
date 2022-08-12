@@ -21,17 +21,14 @@ $config = [
         ],
         'timeZone' => 'America/Los_Angeles',
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-               'db'=>[
-                  'class' => 'yii\log\DbTarget',
-                  'logTable'=>'{{test_log}}',
-                  'levels' => ['error', 'warning', 'trace', 'info'],
-                  'categories' => ['yii\db\*'],
-               ],
+            'targets'=>[
+                [
+                'class' => 'yii\log\DbTarget',
+                'levels' => ['error', 'warning', 'trace', 'info'],
+                'categories' => ['yii\db\*'],
+                ],
             ],
-         ],
-        
+        ],
         'user' => [
             
             'identityClass' => 'app\models\Account',

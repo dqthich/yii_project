@@ -2,14 +2,15 @@
 
 /** @var yii\web\View $this */
 /** @var string $content */
-
+use  yii\web\Session;
 use app\assets\AppAsset;
 use app\widgets\Alert;
 use yii\bootstrap4\Breadcrumbs;
 use yii\bootstrap4\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
-
+$session = Yii::$app->session;
+$session->open();
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -53,18 +54,20 @@ AppAsset::register($this);
                 //     . Html::endForm()
                 //     . '</li>'
                 // )
-                Yii::$app->user->isGuest ? (
+               
+                !isset($session['username']) ? (
                     ['label' => 'Sign in', 'url' => ['/account/login']]
                 ) : (
                     '<li>'
                     . Html::beginForm(['/account/logout'], 'post', ['class' => 'form-inline'])
                     . Html::submitButton(
-                        'Logout (' .  Yii::$app->user->identity->account_name . ')',
+                        'Logout (' . $session['username']. ')',
                         ['class' => 'btn btn-link logout']
                     )
                     . Html::endForm()
                     . '</li>'
                 )
+                
                 
                  
             ],

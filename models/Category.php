@@ -1,17 +1,17 @@
 <?php
 
 namespace app\models;
-
+use yii\db\ActiveRecord;
 use Yii;
 use yii\base\Model;
 
 
-class Category extends Model
+class Category extends ActiveRecord
 {
-    public $category_id;
-    public $category_name;
-    public $type;
-    public $account_id;
+    private $category_id;
+    private $category_name;
+    private $type;
+    private $account_id;
    
 
     /**
@@ -24,7 +24,7 @@ class Category extends Model
     public function rules()
     {
         return [
-            [['category_id', 'category_name', 'type', 'account_id'], 'required'],
+            [['category_name', 'type',], 'required'],
             
         ];
     }
@@ -35,8 +35,8 @@ class Category extends Model
     public function attributeLabels()
     {
         return [
-            'category_id' => 'Category Id',
-            'category_name' => 'Category Name',
+            'category_id' => 'Id',
+            'category_name' => 'Name',
             'type' => 'Type',
             'account_id' => 'Account Id',
         ];
@@ -52,18 +52,5 @@ class Category extends Model
         
     }
 
-    public function listCategory()
-    {
-
-    }
-
-    public function editCategory($id)
-    {
-
-    }
-
-    public function deleteCategory($id)
-    {
-
-    }
+    
 }

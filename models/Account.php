@@ -50,34 +50,35 @@ class Account extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    //Kiem tra dang nhap
-    // public function login($username, $password)
-    // {
-    //     $dong = Account::find()->where(['account_name'=>$username, 'password'=>$password])->count();
-    //         if($dong==1){
-    //             return true;
-    //         }else{
-    //             return false;
-    //         }
+   // Kiem tra dang nhap
+    public function login($username, $password)
+    {
+        $dong = Account::find()->where(['account_name'=>$username, 'password'=>$password])->count();
+            if($dong==1){
+                return true;
+            }else{
+                return false;
+            }
 
-    // }
+    }
 
     
 
-    public function login()
-    {
-        echo var_dump($this->getUser());
+    // public function login()
+    // {
+    //     echo var_dump($this->getUser());
        
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+    //     if ($this->validate()) {
+    //         return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
             
-        }
-        return false;
-    }
+    //     }
+    //     return false;
+    // }
    
     public function getUser()
     {
-        Yii::warning($this->account_name);
+        Yii::warning($this->account_name,'account_log');
+        
         echo var_dump($this->account_name);
         if ($this->_user === false) {
             $this->_user = Account::findByUsername($this->account_name);

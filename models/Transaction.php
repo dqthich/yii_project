@@ -1,18 +1,18 @@
 <?php
 
 namespace app\models;
-
+use yii\db\ActiveRecord;
 use Yii;
 use yii\base\Model;
 
 
-class Category extends Model
+class Transaction extends ActiveRecord
 {
-    public $transaction_id;
-    public $payment;
-    public $wallet_id;
-    public $category_id;
-    public $date;
+    private $transaction_id;
+    private $payment;
+    private $wallet_id;
+    private $category_id;
+    private $date;
    
 
     /**
@@ -39,7 +39,7 @@ class Category extends Model
             'transaction_id' => 'Transaction Id',
             'payment' => 'Payment',
             'wallet_id' => 'Wallet Id',
-            'category_id' => 'Category Id',
+            'category_id' => 'Category',
             'date' => 'Date',
         ];
     }
