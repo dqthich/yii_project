@@ -24,7 +24,7 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            [['category_name', 'type',], 'required'],
+            [['type',], 'required'],
             
         ];
     }

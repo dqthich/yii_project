@@ -25,7 +25,7 @@ class Transaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['transaction_id', 'payment', 'wallet_id', 'category_id', 'date'], 'required'],
+            [['transaction_id', 'payment', 'wallet_id', 'category_id'], 'required'],
             
         ];
     }

@@ -61,10 +61,70 @@ class WalletController extends Controller
             $balance = $request['balance'];
             $des = $request['description'];
             Wallet::updateAll(['balance'=>$balance,'description'=>$des],['wallet_id'=>$id]);
-            Yii::$app->getSession()->setFlash('success', 'You has been update category successfully.');
+            Yii::$app->getSession()->setFlash('success', 'You has been update wallet successfully.');
             return $this->redirect('index');     
         }    
         return $this->render('edit',['edit'=>$edit]);
     }
+    public function actionSetcurrentwallet(){
+        $wallet= new Wallet();
+        $wallet= Wallet::find()->all();
+        $wallet1= new Wallet();
+        if ($wallet1->load(Yii::$app->request->post())) {
+            $request = Yii::$app->request->post('Wallet');
+            $name = $request['description'];
+            $wallet1 = Wallet::find()->where(['wallet_id'=>$name])->all();
+            return $this->render('currentwallet',['wallet'=>$wallet1]);
+        }
+        return $this->render('setcurrentwallet',['wallet'=>$wallet]);
+    }
+
+    public function actionTransfermoney()
+    {
+        $wallet_id = $_GET['wallet_id'];
+        $wallet= new Wallet();
+        $wallet= Wallet::find()->all();
+        $wallet1=new Wallet();
+        if ($wallet1->load(Yii::$app->request->post())){
+            $request = Yii::$app->request->post('Wallet');
+            $balance = $request['balance'];
+            $wallettransfer = Wallet::findOne($wallet_id);
+            if($wallettransfer['balance'] < $balance){
+                echo "<script>
+                        alert('Số dư không đủ! Vui lòng nhập lại!');
+                        window.location='index';
+                    </script>";
+            }else{
+                $newBalance = $wallettransfer['balance'] - $balance;
+                $name = $request['description'];
+                $wallettransfered=Wallet::findOne($name);
+                $newBalanced =  $wallettransfered['balance'] + $balance;
+                Wallet::updateAll(['balance'=>$newBalance],['wallet_id'=>$wallet_id]);
+                Wallet::updateAll(['balance'=>$newBalanced],['wallet_id'=>$name]);
+                return $this->redirect('index');
+            }
+            
+        }
+        return $this->render('transfermoney',['wallet'=>$wallet]);
+    }
+    public function actionAddmoney(){
+        $wallet = new Wallet();
+        $wallet_id = $_GET['wallet_id'];
+        $wallet = Wallet::find()->where(['wallet_id'=>$wallet_id])->all();
+        $wallet1= new Wallet();
+        if ($wallet1->load(Yii::$app->request->post())) {
+            $request = Yii::$app->request->post('Wallet');
+            $newmoney = $request['balance'];
+            $balance=Wallet::findOne($wallet_id);
+            $newBalance = $newmoney + $balance['balance'];
+            Wallet::updateAll(['balance'=>$newBalance],['wallet_id'=>$wallet_id]);
+            echo "<script>
+                        alert('Bạn đã nạp tiền thành công!');
+                        window.location='setcurrentwallet';
+                    </script>";
+        }
+        return $this->render('addmoney',['wallet'=>$wallet]);
+    }
+
    
 }    

@@ -1,10 +1,10 @@
 <?php 
-use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html; 
+use yii\bootstrap4\ActiveForm;
 ?>
 
 <h1>List transaction</h1>
-<!-- <form class="form-inline my-2 my-lg-0" action="search.php" method="post">
+<!-- <form class="form-inline my-2 my-lg-0" action="Search.php" method="post">
       <input class="form-control mr-sm-2" type="search" name= "search" id= "search" placeholder="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" name="btn_tk"  id="btn_tk" type="submit">Search</button>
 </form> -->
@@ -12,6 +12,7 @@ use yii\helpers\Html;
         'id' => 'login-form',
         'layout' => 'horizontal',
         'action'=>'search',
+        'class'=>'form-inline my-2 my-lg-0',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
             'labelOptions' => ['class' => 'col-lg-1 col-form-label mr-lg-3'],
@@ -19,11 +20,10 @@ use yii\helpers\Html;
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
-        <?= $form->field($trans, 'category_name')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($tran, 'date')->input('date') ?>
+        <?= $form->field($trans, 'category_name')->textInput(['autofocus' => true,'class'=>'form-control mr-sm-2']) ?> 
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Search', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Search', ['class' => 'btn btn-outline-success my-2 my-sm-0', 'name' => 'signup-button']) ?>
             </div>      
         </div>
 <?php ActiveForm::end(); ?>

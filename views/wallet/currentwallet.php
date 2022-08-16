@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 ?>
 <h1>Wallet</h1>
-<?php echo Html::a('Set current wallet',['wallet/setcurrentwallet'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
+<?php echo Html::a('Set current wallet',['wallet/setcurrentwallet'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?> &nbsp;
 <?php if ($wallet): $n=1;?>
 <table class="table table-bordered">
   <thead>
@@ -25,6 +25,8 @@ use yii\helpers\Html;
       <td>
           <?php echo Html::a('Edit',['wallet/edit','wallet_id'=>$item->wallet_id], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
           <?php echo Html::a('Add',['wallet/add'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
+          <?php echo Html::a('Transfer money ',['wallet/transfermoney','wallet_id'=>$item->wallet_id], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
+          <?php echo Html::a('Add money ',['wallet/addmoney','wallet_id'=>$item->wallet_id], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
       </td>
     </tr>
     <?php $n++;endforeach;?>
