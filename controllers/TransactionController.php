@@ -100,7 +100,7 @@ class TransactionController extends Controller
         $id = $_GET['transaction_id'];
         $delete = Transaction::findOne($id);
         $delete->delete();
-        return $this->render('index');
+        return $this->redirect('index');
     }
     public function actionSearch()
     {
