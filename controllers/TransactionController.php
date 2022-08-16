@@ -41,15 +41,7 @@ class TransactionController extends Controller
             $payment = $request['payment'];
             $wallet_id = $request['wallet_id'];
             $category_id = $request['category_id'];
-            $date = $request['date'];
-            Yii::$app->db->createCommand()
-                ->insert('Transaction',[
-                    'payment'=>$payment,
-                    'wallet_id'=>$wallet_id,
-                    'category_id'=>$category_id,
-                    'date'=>$date,
-                ])->execute();
-            
+            $date = $request['date']; 
             $update=Wallet::findOne($wallet_id);
             $newBalance =  $update['balance'] - $payment;
             if( $update['balance'] < $payment){
@@ -58,6 +50,13 @@ class TransactionController extends Controller
                 window.location='index';
                 </script>";
             }else{
+                Yii::$app->db->createCommand()
+                    ->insert('Transaction',[
+                        'payment'=>$payment,
+                        'wallet_id'=>$wallet_id,
+                        'category_id'=>$category_id,
+                        'date'=>$date,
+                    ])->execute();
                 $newBalance =  $update['balance'] - $payment;
                 Wallet::updateAll(['balance'=>$newBalance],['wallet_id'=>$wallet_id]);
                 Yii::$app->getSession()->setFlash('success', 'You has been add transaction successfully.');
@@ -85,6 +84,18 @@ class TransactionController extends Controller
             $wallet_id = $request['wallet_id'];
             $category_id = $request['category_id'];
             $date = $request['date'];
+            $update = Wallet::findOne($wallet_id);
+            $moneyinwallet= $update['balance'];
+            $moneycurrent = Transaction::findOne($id);
+            if($moneycurrent['payment'] > $payment){
+                $uptomoney = $moneycurrent['payment'] - $payment;
+                $moneynew = $moneyinwallet + $uptomoney;
+                Wallet::updateAll(['balance'=>$moneynew],['wallet_id'=>$wallet_id]);
+            }else{
+                $downtomoney = $payment - $moneycurrent['payment'];
+                $moneynew = $moneyinwallet - $downtomoney;
+                Wallet::updateAll(['balance'=>$moneynew],['wallet_id'=>$wallet_id]);
+            }
             Transaction::updateAll(['payment'=>$payment,'wallet_id'=>$wallet_id,'category_id'=>$category_id,'date'=>$date],['transaction_id'=>$id]);
             Yii::$app->getSession()->setFlash('success', 'You has been update transaction successfully.');
             return $this->redirect('index');     
