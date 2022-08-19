@@ -4,10 +4,7 @@ use yii\helpers\Html;
 ?>
 
 <h1>List transaction</h1>
-<!-- <form class="form-inline my-2 my-lg-0" action="search.php" method="post">
-      <input class="form-control mr-sm-2" type="search" name= "search" id= "search" placeholder="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" name="btn_tk"  id="btn_tk" type="submit">Search</button>
-</form> -->
+
 <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
@@ -27,31 +24,42 @@ use yii\helpers\Html;
             </div>      
         </div>
 <?php ActiveForm::end(); ?>
+<?php echo Html::a('Report',['transaction/report'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?> &nbsp;
 <?php if ($object): $n=1;?>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Transaction id</th>
-      <th scope="col">Payment</th>
+      <th scope="col">Amount</th>
       <th scope="col">Category name</th>
+      <th scope="col">Type</th>
       <th scope="col">Wallet</th>
       <th scope="col">Date</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
+  <?php echo Html::a('Add',['transaction/add'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
     <?php foreach($object as $key =>$item ) : ?>
+      
     <tr>
       <th scope="row"><?php echo $n; ?></th>
       <td><?php echo $item['transaction_id']; ?></td>
       <td><?php echo number_format($item['payment'])." VND";?><i class="fa fa-facebook" aria-hidden="true"></i></td>
       <td><?php echo $item['category_name']; ?></td>
+      <td><?php 
+            if( $item['type'] == 1){
+              echo "expanse";
+              }else{
+                echo "income";
+          }
+            ?></td>
       <td><?php echo $item['description']; ?></td>
       <td><?php echo $item['date']; ?></td>
       <td><?php echo Html::a('Delete',['transaction/delete','transaction_id'=>$item['transaction_id']], ['onClick'=>'return ConfirmDelete()'] , ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
           <?php echo Html::a('Edit',['transaction/edit','transaction_id'=>$item['transaction_id']], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
-          <?php echo Html::a('Add',['transaction/add'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
+         
       </td>
     </tr>
     <?php $n++;endforeach;?>

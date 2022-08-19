@@ -6,6 +6,7 @@ use app\models\Account;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -16,9 +17,11 @@ class AccountController extends Controller
 {
     public function actionLogin()
     {
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+       // var_dump(Yii::$app->user);
         $model = new Account();
         if ($model->load(Yii::$app->request->post())) {
            $request = Yii::$app->request->post('Account');
@@ -62,5 +65,27 @@ class AccountController extends Controller
             unset($session['username']);      
         }
         return $this->goHome();
+    }
+    public function actionUpload(){
+        $session = Yii::$app->session;
+        $session->open();
+        if(!isset($session['username'])){
+            return $this->goBack(['account/login']);
+        }
+        $account = new Account();
+        if ($account->load(Yii::$app->request->post())) {
+            $account->avatar = UploadedFile::getInstance($account,'avatar');
+            if($account->avatar){
+                $account->avatar->saveAs('../uploads/'.$account->avatar->namen); // lưu vào thư mục uploads
+                $updateavt = Account::find()->where(['account_name'=>$session['username']])->one();
+                $updateavt['avatar'] = 'uploads/'.$account->avatar->baseName . '.' . $account->avatar->extension;
+                $id = $updateavt->account_id;
+                Account::updateAll(['avatar'=>$updateavt['avatar']],['account_id'=>$id]);
+               // $account->avatar = $account->avatar->baseName . '.' . $account->avatar->extension; // lưu vào database
+                Yii::$app->getSession()->setFlash('success', 'You has been update image successfully.');
+                return $this->goBack();
+            }
+        }
+        return $this->render('upload',['account'=> $account]);
     }
 }

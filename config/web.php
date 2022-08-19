@@ -55,6 +55,18 @@ $config = [
                 'encryption' => 'tls',
                         ],
         ],
+        'avatar' => [
+            'class' => \zertex\avatar_generator\AvatarGenerator::class,
+            'images_folder' => 'path_to_image_files',
+            'images_url' => 'url_to_image_files',
+            'size_width' => 300,            // default: 300
+            'font' => 'path_to_ttf_font',   // default: Play-Bold // may use aliases
+            'font_size' => 200,             // default: 200
+            'salt' => 'random_salt',        // salt for image file names
+            'texture' => ['sun', 'rain'],   // texture name
+            'text_over_image' => true,      // draw text over image (for avatar from file)
+            'texture_over_image' => true,   // draw texture over image (for avatar from file)
+        ],
        
         'db' => $db,
         

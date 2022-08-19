@@ -43,8 +43,20 @@ class TransactionController extends Controller
             $category_id = $request['category_id'];
             $date = $request['date']; 
             $update=Wallet::findOne($wallet_id);
-            $newBalance =  $update['balance'] - $payment;
-            if( $update['balance'] < $payment){
+            $checktype=Category::findOne($category_id);
+            if($checktype['type']==0){
+                $newBalance =  $update['balance'] + $payment;
+                Wallet::updateAll(['balance'=>$newBalance],['wallet_id'=>$wallet_id]);
+                Yii::$app->db->createCommand()
+                    ->insert('Transaction',[
+                        'payment'=>$payment,
+                        'wallet_id'=>$wallet_id,
+                        'category_id'=>$category_id,
+                        'date'=>$date,
+                    ])->execute();
+                Yii::$app->getSession()->setFlash('success', 'You has been add transaction successfully.');
+                return $this->redirect('index');
+            }elseif($checktype['type']==1 && $update['balance'] < $payment){
                 echo "<script>
                 alert('Số dư trong ví không đủ! Vui lòng nhập lại!');
                 window.location='index';
@@ -87,7 +99,11 @@ class TransactionController extends Controller
             $update = Wallet::findOne($wallet_id);
             $moneyinwallet= $update['balance'];
             $moneycurrent = Transaction::findOne($id);
-            if($moneycurrent['payment'] > $payment){
+            $checktype=Category::findOne($category_id);
+            if($checktype['type']==0){
+                $moneynew = $moneyinwallet + $payment;
+                Wallet::updateAll(['balance'=>$moneynew],['wallet_id'=>$wallet_id]);
+            }elseif($moneycurrent['payment'] > $payment){
                 $uptomoney = $moneycurrent['payment'] - $payment;
                 $moneynew = $moneyinwallet + $uptomoney;
                 Wallet::updateAll(['balance'=>$moneynew],['wallet_id'=>$wallet_id]);
@@ -126,6 +142,30 @@ class TransactionController extends Controller
                                     Where a.category_id=b.category_id and b.wallet_id=c.wallet_id and 
                                             b.date like '%$search1%' and a.category_name like '%".$search."%' ")->queryAll();
             return $this->render('index',['object'=>$trans,'trans'=>$cate, 'tran'=>$trans1]);  
+        }
+    }
+    public function actionReport()
+    {
+        $cate = new Category();
+        $trans1 = new Transaction();
+        $trans=Yii::$app->db->createCommand("SELECT * FROM Transaction as a, Category as b, Wallet as c 
+                    Where a.category_id=b.category_id and a.wallet_id=c.wallet_id")->queryAll();  
+        $object = (object) $trans;
+        return $this->render('report',['object'=>$object,'trans'=>$cate,'tran'=>$trans1]);
+    }
+    public function actionMonthreport()
+    {
+        $cate = new Category();
+        $trans1 = new Transaction();
+        if ($cate->load(Yii::$app->request->post())) {
+            $request = Yii::$app->request->post('Category');
+            $request1= Yii::$app->request->post('Transaction');
+            $search = $request['category_name'];
+            $search1= $request1['date'];
+            $trans=Yii::$app->db->createCommand("SELECT * FROM Category as a, Transaction as b, Wallet as c 
+                                    Where a.category_id=b.category_id and b.wallet_id=c.wallet_id and 
+                                            b.date like '%$search1%' and a.category_name like '%".$search."%' ")->queryAll();
+            return $this->render('report',['object'=>$trans,'trans'=>$cate, 'tran'=>$trans1]);  
         }
     }
 }    

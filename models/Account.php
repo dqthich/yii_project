@@ -31,6 +31,7 @@ class Account extends ActiveRecord implements IdentityInterface
             //email has to be a valid email address
             ['email', 'email'],
             ['email', 'unique'],
+           // [['avatar'],'file','extension'=>'jpg,png,gif'],
         ];
     }
 
@@ -45,7 +46,7 @@ class Account extends ActiveRecord implements IdentityInterface
             'email' => 'Email',
             'password' => 'Password',
             'remember' => 'Remember',
-            'avatar' => 'Avatar',
+            'avatar' => '',
             'register' => 'Verify Account',
         ];
     }

@@ -25,7 +25,7 @@ $this->title = 'Edit category';
         ],
     ]); ?>
         <?= $form->field($editt, 'category_name')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($editt, 'type')?>
+        <?= $form->field($editt, 'type')->radioList([1 =>'expanse', 0 =>'income']) ?>
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
                 <?= Html::submitButton('Save',['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

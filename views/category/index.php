@@ -4,6 +4,7 @@ use yii\helpers\Html;
 ?>
 
 <h1>List Category</h1>
+<?php echo Html::a('Add',['category/add'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
 <?php if ($list): $n=1;?>
 <table class="table table-bordered">
   <thead>
@@ -21,10 +22,16 @@ use yii\helpers\Html;
       <th scope="row"><?php echo $n; ?></th>
       <td><?php echo $item->category_id; ?></td>
       <td><?php echo $item->category_name;?><i class="fa fa-facebook" aria-hidden="true"></i></td>
-      <td><?php echo $item->type; ?></td>
+      <td><?php if($item->type ==1 ){
+                    echo "expanse";
+                  }else{
+                    echo "income";
+                  }
+         ?>
+      </td>
       <td><?php echo Html::a('Delete',['category/delete','category_id'=>$item->category_id], ['onClick'=>'return ConfirmDelete()'] , ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
           <?php echo Html::a('Edit',['category/edit','category_id'=>$item->category_id], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
-          <?php echo Html::a('Add',['category/add'], ['class' => 'btn btn-primary', 'name' => 'signin-button']) ?>
+       
       </td>
     </tr>
     <?php $n++;endforeach;?>

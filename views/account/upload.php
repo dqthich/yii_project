@@ -7,12 +7,16 @@
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
-$this->title = 'Add category';
+$this->title = 'Upload avatar';
 ?>
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>Please select image to upload:</p>
     <?= Yii::$app->session->getFlash('success'); ?>
     <?php $form = ActiveForm::begin([
+        'options'=>['enctype'=>'multipart/form-data'],
+       // 'options' => ['enctype' => 'multipart/form-data'],
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
@@ -22,12 +26,10 @@ $this->title = 'Add category';
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
-
-        <?= $form->field($cate, 'category_name')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($cate, 'type')->radioList([1 =>'expanse', 0 =>'income']) ?>
+        <?= $form->field($account, 'avatar')->fileInput() ?>    
         <div class="form-group">
             <div class="offset-lg-1 col-lg-11">
-                <?= Html::submitButton('Add', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Upload', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>      
             </div>
            
         </div>
